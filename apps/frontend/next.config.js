@@ -1,4 +1,10 @@
-module.exports = {
+/** @type {import('next').NextConfig} */
+
+const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ["ui"],
-};
+  env: {
+    INFURA_KEY: process.env.INFURA_KEY,
+  }
+}
+
+module.exports = nextConfig

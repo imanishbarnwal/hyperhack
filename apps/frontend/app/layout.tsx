@@ -1,8 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Ubuntu_Mono } from "next/font/google";
+import MyWagmiProvider from "./providers/MyWagmiProvider";
+import ClientOnlyProvider from "./providers/ClientOnlyProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const ubuntu = Ubuntu_Mono({ weight: ['400', '700'], subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "Create Turborepo",
@@ -16,7 +18,11 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={ubuntu.className}>
+        <MyWagmiProvider>
+          <ClientOnlyProvider>{children}</ClientOnlyProvider>
+        </MyWagmiProvider>
+      </body>
     </html>
   );
 }

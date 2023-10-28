@@ -7,9 +7,11 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.16",
     "eslint": "^8.48.0",
+    "postcss": "^8.4.31",
     "prettier": "^3.0.3",
-    "tsconfig": "*",
+    "tailwindcss": "^3.3.5",
     "turbo": "latest"
   },
   "name": "hyperhack",
@@ -17,5 +19,10 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@wagmi/core": "^1.4.5",
+    "viem": "^1.18.0",
+    "wagmi": "^1.4.5"
+  }
 }
