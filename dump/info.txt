@@ -1,0 +1,24 @@
+
+
+architecture:
+1 nft contract- various mailbox on different chains
+nft contract on mumbai
+mailbox on other chains -> all connects to mumbai 
+
+nft contract on mumbai - 0x36b5c77710ed5B68b5cAE133f1A4df8754b39aEf
+mailbox contract on goerli - 0xEe98e544044ded062E37C30a449E64cbeBC44787
+
+HyperInitiateMint Constructor values
+mumbai mailbox address: 0xCC737a94FecaeC165AbCf12dED095BB13F037685
+mumbai gaspaymentMaster api: 0xF90cB82a76492614D07B82a7658917f3aC811Ac1
+minCost: 0
+
+HyperMintNFT constructor values
+mumbai mailbox address: 0xCC737a94FecaeC165AbCf12dED095BB13F037685
+
+OUR HyperInitiateMint(GOERLI) CONTRACT ADDRESS: 0x357868069f3D84810c17DF3673847cA8760D927b
+OUR HyperMintNFT(MUMBAI) CONTRACT ADDRESS: 0x790823a2ba1D662E24E18737E21ccDefa025bBB0
+exact gas needed: 0.0018689229
+
+
+

@@ -14,8 +14,10 @@ interface IMailbox {
         bytes calldata _messageBody
     ) external returns (bytes32);
 
-    function process(bytes calldata _metadata, bytes calldata _message)
-        external;
+    function process(
+        bytes calldata _metadata,
+        bytes calldata _message
+    ) external;
 
     function count() external view returns (uint32);
 
@@ -25,7 +27,6 @@ interface IMailbox {
 }
 
 contract HyperMintNFT is ERC721 {
-
     uint private mintCost;
     uint public tokenCount;
     uint public maxSupply;
@@ -34,17 +35,24 @@ contract HyperMintNFT is ERC721 {
 
     event Executed(address indexed _from, bytes _value);
 
-    constructor(address _mailbox, uint _mintCost) ERC721("BoredApeYachtClub","BAYC") {
+    constructor(address _mailbox) ERC721("OmniPresent", "OP") {
         tokenCount = 0;
-        maxSupply = 9000;
+        maxSupply = 5000;
         owner = msg.sender;
-        mintCost = _mintCost;
         mailbox = IMailbox(_mailbox);
     }
 
-    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+    function tokenURI(
+        uint256 tokenId
+    ) public view virtual override returns (string memory) {
         _requireMinted(tokenId);
-        return string(abi.encodePacked("ipfs://QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYS2TBLgrvw8CW/",Strings.toString(tokenId)));
+        return
+            string(
+                abi.encodePacked(
+                    "ipfs://QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYS2TBLgrvw8CW/",
+                    Strings.toString(tokenId)
+                )
+            );
     }
 
     function increaseSupply(uint supply) public {
@@ -52,31 +60,30 @@ contract HyperMintNFT is ERC721 {
         maxSupply = supply;
     }
 
+    function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {
+        return address(uint160(uint256(_buf)));
+    }
+
     // To receive the message from Hyperlane
     function handle(
-        uint32,
-        bytes32,
+        uint32 _destinationDomain,
+        bytes32 _sender,
         bytes calldata payload
     ) public {
-        
-        address msgSender;
-
-        (msgSender) = abi.decode(payload,(address));
+        address msgSender = abi.decode(payload, (address));
 
         mintToken(msgSender);
-        
+
         emit Executed(msg.sender, payload);
     }
 
     function mintToken(address _msgSender) private {
         tokenCount = tokenCount + 1;
         require(tokenCount <= maxSupply, "Max Supply Is Reached!!");
-        super._mint(_msgSender,  tokenCount);
+        super._mint(_msgSender, tokenCount);
     }
 
     function initiateMint() public payable {
-        require(msg.value > mintCost, "Pay the mint cost!!");
         mintToken(msg.sender);
     }
-
 }
