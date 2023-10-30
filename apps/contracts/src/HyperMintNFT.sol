@@ -45,7 +45,7 @@ contract HyperMintNFT is ERC721 {
     function tokenURI(
         uint256 tokenId
     ) public view virtual override returns (string memory) {
-        _requireMinted(tokenId);
+        // _requireMinted(tokenId);
         return
             string(
                 abi.encodePacked(
