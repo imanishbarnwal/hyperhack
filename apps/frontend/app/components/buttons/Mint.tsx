@@ -33,7 +33,7 @@ export default function Mint() {
         address: "0x790823a2ba1D662E24E18737E21ccDefa025bBB0",
         abi: HyperMintNFTABI,
         functionName: "initiateMint",
-        value: parseUnits("1000", 18),
+        value: parseUnits("1", 0),
       });
 
       const txn = await waitForTransaction({ hash: hash, chainId: chain.id });
@@ -46,7 +46,7 @@ export default function Mint() {
         abi: HyperInitiateMintABI,
         functionName: "initiateMint",
         args: [polygonMumbai.id, "0x790823a2ba1D662E24E18737E21ccDefa025bBB0"],
-        value: parseUnits("1000", 18),
+        value: parseUnits("0.01", 0),
       });
 
       const txn = await waitForTransaction({ hash: hash, chainId: chain.id });
