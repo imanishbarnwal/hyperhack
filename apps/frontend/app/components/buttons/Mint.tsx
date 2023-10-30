@@ -26,34 +26,42 @@ export default function Mint() {
 
     setIsLoading(true);
 
-    if (chain.id === polygonMumbai.id) {
-      // Normal mint
+    try {
+      if (chain.id === polygonMumbai.id) {
+        // Normal mint
 
-      const { hash } = await writeContract({
-        address: "0x790823a2ba1D662E24E18737E21ccDefa025bBB0",
-        abi: HyperMintNFTABI,
-        functionName: "initiateMint",
-        value: parseUnits("1", 0),
-      });
+        const { hash } = await writeContract({
+          address: "0x790823a2ba1D662E24E18737E21ccDefa025bBB0",
+          abi: HyperMintNFTABI,
+          functionName: "initiateMint",
+          value: parseUnits("1", 0),
+        });
 
-      const txn = await waitForTransaction({ hash: hash, chainId: chain.id });
+        const txn = await waitForTransaction({ hash: hash, chainId: chain.id });
 
-      console.log(txn);
-    } else if (chain.id === goerli.id) {
-      // Cross-chain mint
-      const { hash } = await writeContract({
-        address: "0x357868069f3D84810c17DF3673847cA8760D927b",
-        abi: HyperInitiateMintABI,
-        functionName: "initiateMint",
-        args: [polygonMumbai.id, "0x790823a2ba1D662E24E18737E21ccDefa025bBB0"],
-        value: parseUnits("0.01", 18),
-      });
+        console.log(txn);
+      } else if (chain.id === goerli.id) {
+        // Cross-chain mint
+        const { hash } = await writeContract({
+          address: "0x357868069f3D84810c17DF3673847cA8760D927b",
+          abi: HyperInitiateMintABI,
+          functionName: "initiateMint",
+          args: [
+            polygonMumbai.id,
+            "0x790823a2ba1D662E24E18737E21ccDefa025bBB0",
+          ],
+          value: parseUnits("0.01", 18),
+        });
 
-      const txn = await waitForTransaction({ hash: hash, chainId: chain.id });
+        const txn = await waitForTransaction({ hash: hash, chainId: chain.id });
 
-      console.log(txn);
-    } else {
-      toast.error("Unsupported chain");
+        console.log(txn);
+      } else {
+        toast.error("Unsupported chain");
+      }
+    } catch (e) {
+        console.error(e);
+        toast.error(e.message);
     }
 
     setIsLoading(false);
